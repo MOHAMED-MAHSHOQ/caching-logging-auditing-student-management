@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+    <changeSet id="002-create-audit-tables" author="dev-team">
+
+        <createTable tableName="REVINFO">
+            <column name="REV" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="pk_revinfo" nullable="false"/>
+            </column>
+            <column name="REVTSTMP" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="REVINFO_SEQ"
+                        startValue="1"
+                        incrementBy="50"/>
+
+
+        <createTable tableName="students_AUD">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REV" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REV_TYPE" type="SMALLINT"/>
+            <column name="first_name" type="VARCHAR(100)"/>
+            <column name="last_name"  type="VARCHAR(100)"/>
+            <column name="email"      type="VARCHAR(150)"/>
+            <column name="date_of_birth" type="DATE"/>
+            <column name="grade"      type="VARCHAR(10)"/>
+            <column name="phone_number" type="VARCHAR(20)"/>
+            <column name="status"     type="VARCHAR(20)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(100)"/>
+            <column name="updated_by" type="VARCHAR(100)"/>
+        </createTable>
+
+        <addPrimaryKey tableName="students_AUD"
+                       columnNames="id, REV"
+                       constraintName="pk_students_aud"/>
+
+        <addForeignKeyConstraint
+                baseTableName="students_AUD"
+                baseColumnNames="REV"
+                referencedTableName="REVINFO"
+                referencedColumnNames="REV"
+                constraintName="fk_students_aud_revinfo"/>
+
+        <createIndex tableName="students_AUD" indexName="idx_students_aud_id">
+            <column name="id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="students_AUD"/>
+            <dropTable tableName="REVINFO"/>
+            <dropSequence sequenceName="REVINFO_SEQ"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

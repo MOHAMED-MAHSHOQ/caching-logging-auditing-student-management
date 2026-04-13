@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+    <changeSet id="003-insert-sample-data" author="dev-team" context="!test">
+
+        <insert tableName="students">
+            <column name="first_name"    value="Arjun"/>
+            <column name="last_name"     value="Sharma"/>
+            <column name="email"         value="arjun.sharma@example.com"/>
+            <column name="date_of_birth" valueDate="2000-05-15"/>
+            <column name="grade"         value="A"/>
+            <column name="phone_number"  value="+91-9876543210"/>
+            <column name="status"        value="ACTIVE"/>
+            <column name="created_at"    valueDate="now()"/>
+            <column name="updated_at"    valueDate="now()"/>
+            <column name="created_by"    value="system"/>
+            <column name="updated_by"    value="system"/>
+        </insert>
+
+        <insert tableName="students">
+            <column name="first_name"    value="Priya"/>
+            <column name="last_name"     value="Nair"/>
+            <column name="email"         value="priya.nair@example.com"/>
+            <column name="date_of_birth" valueDate="2001-09-22"/>
+            <column name="grade"         value="B+"/>
+            <column name="phone_number"  value="+91-9123456789"/>
+            <column name="status"        value="ACTIVE"/>
+            <column name="created_at"    valueDate="now()"/>
+            <column name="updated_at"    valueDate="now()"/>
+            <column name="created_by"    value="system"/>
+            <column name="updated_by"    value="system"/>
+        </insert>
+
+        <insert tableName="students">
+            <column name="first_name"    value="Rahul"/>
+            <column name="last_name"     value="Verma"/>
+            <column name="email"         value="rahul.verma@example.com"/>
+            <column name="date_of_birth" valueDate="1999-11-30"/>
+            <column name="grade"         value="A+"/>
+            <column name="phone_number"  value="+91-9988776655"/>
+            <column name="status"        value="GRADUATED"/>
+            <column name="created_at"    valueDate="now()"/>
+            <column name="updated_at"    valueDate="now()"/>
+            <column name="created_by"    value="system"/>
+            <column name="updated_by"    value="system"/>
+        </insert>
+
+        <insert tableName="students">
+            <column name="first_name"    value="Anjali"/>
+            <column name="last_name"     value="Menon"/>
+            <column name="email"         value="anjali.menon@example.com"/>
+            <column name="date_of_birth" valueDate="2002-03-08"/>
+            <column name="grade"         value="C"/>
+            <column name="phone_number"  value="+91-9871234567"/>
+            <column name="status"        value="INACTIVE"/>
+            <column name="created_at"    valueDate="now()"/>
+            <column name="updated_at"    valueDate="now()"/>
+            <column name="created_by"    value="system"/>
+            <column name="updated_by"    value="system"/>
+        </insert>
+
+        <insert tableName="students">
+            <column name="first_name"    value="Kiran"/>
+            <column name="last_name"     value="Patel"/>
+            <column name="email"         value="kiran.patel@example.com"/>
+            <column name="date_of_birth" valueDate="2001-07-19"/>
+            <column name="grade"         value="B"/>
+            <column name="phone_number"  value="+91-9012345678"/>
+            <column name="status"        value="ACTIVE"/>
+            <column name="created_at"    valueDate="now()"/>
+            <column name="updated_at"    valueDate="now()"/>
+            <column name="created_by"    value="system"/>
+            <column name="updated_by"    value="system"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="students">
+                <where>email IN (
+                    'arjun.sharma@example.com',
+                    'priya.nair@example.com',
+                    'rahul.verma@example.com',
+                    'anjali.menon@example.com',
+                    'kiran.patel@example.com'
+                    )</where>
+            </delete>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

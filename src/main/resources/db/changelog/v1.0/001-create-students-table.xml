@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="001-create-students-table" author="dev-team">
+        <comment>Create the students table with audit columns</comment>
+
+        <createTable tableName="students">
+
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="pk_students" nullable="false"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(150)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_students_email"/>
+            </column>
+
+            <column name="date_of_birth" type="DATE"/>
+
+            <column name="grade" type="VARCHAR(10)"/>
+
+            <column name="phone_number" type="VARCHAR(20)"/>
+
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Spring Data JPA Audit Fields -->
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP"/>
+
+            <column name="created_by" type="VARCHAR(100)"/>
+
+            <column name="updated_by" type="VARCHAR(100)"/>
+
+        </createTable>
+
+        <sql>
+            ALTER TABLE students
+                ADD CONSTRAINT chk_students_status
+                    CHECK (status IN ('ACTIVE', 'INACTIVE', 'GRADUATED', 'SUSPENDED'));
+        </sql>
+
+        <createIndex tableName="students" indexName="idx_students_email">
+            <column name="email"/>
+        </createIndex>
+
+        <createIndex tableName="students" indexName="idx_students_status">
+            <column name="status"/>
+        </createIndex>
+
+        <createIndex tableName="students" indexName="idx_students_name">
+            <column name="first_name"/>
+            <column name="last_name"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="students"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
