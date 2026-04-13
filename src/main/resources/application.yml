@@ -6,30 +6,25 @@ spring:
     username: postgres
     password: mahshoq
     driver-class-name: org.postgresql.Driver
-
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
-
-logging:
-  level:
-    root: info
-
   cache:
     type: caffeine
-
   jpa:
     hibernate:
-
       ddl-auto: validate
     show-sql: false
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
         org.hibernate.envers:
-          audit_table_suffix: _AUD
-          revision_field_name: REV
-          revision_type_field_name: REV_TYPE
+          audit_table_suffix: _aud
+          revision_field_name: rev
+          revision_type_field_name: rev_type
           store_data_at_delete: true
+
+logging:
+  level:
+    root: info
